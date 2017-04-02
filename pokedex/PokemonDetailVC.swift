@@ -9,8 +9,8 @@
 import UIKit
 
 class PokemonDetailVC: UIViewController {
-
-
+    
+    
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var mainImg: UIImageView!
     @IBOutlet weak var descriptionLbl: UILabel!
@@ -30,10 +30,28 @@ class PokemonDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         nameLbl.text = pokemon.name.capitalized
+        mainImg.image = UIImage(named: "\(self.pokemon.pokedexId)")
+        currentEvoImg.image = UIImage(named: "\(self.pokemon.pokedexId)")
+        pokedexLbl.text = "\(self.pokemon.pokedexId)"
+        pokemon.downloadPokemonDetails {
+            self.updateUI()
+        }
     }
-
+    
+    func updateUI(){
+        typeLbl.text = self.pokemon.type
+        heightLbl.text = self.pokemon.height
+        weightLbl.text = self.pokemon.weight
+        attackLbl.text = self.pokemon.attack
+        defenseLbl.text = self.pokemon.defense
+        evoLbl.text = self.pokemon.nextEvolution
+        nextEvoImage.image = UIImage(named: "\(self.pokemon.nextEvolutionID)")
+        descriptionLbl.text = self.pokemon.description
+    }
+    
+    
     @IBAction func backBtnPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-
+    
 }
